@@ -14,6 +14,22 @@ class Room {
         this.isAvail = isAvail;
     }
 
+    public int getRoomNumber () {
+        return this.roomNumber;
+    }
+
+    public string getBedConfiguration () {
+        return this.bedConfiguration;
+    }
+
+    public double getDailyRate () {
+        return this.dailyRate;
+    }
+
+    public bool getIsAvail () {
+        return this.isAvail;
+    }
+    
     public double CalculateCharges () {
         return 1.0;
     } 

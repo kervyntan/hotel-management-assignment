@@ -17,5 +17,21 @@ class Guest {
             this.member = member;
         }
 
+        public string getName () {
+            return this.name;
+        }
+
+        public string getPassportNum () {
+            return this.passportNum;
+        }
+
+        public Stay getHotelStay () {
+            return this.hotelStay;
+        }
+
+        public Membership getMembership () {
+            return this.member;
+        }
+
 
 }

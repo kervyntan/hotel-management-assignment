@@ -4,21 +4,48 @@
 
 using System;
 using System.IO;
+using System.Collections.Generic;
 
 namespace MainProgram {
     class Program {
-        static void Main (string[] args) {
-            // using(var reader = new StreamReader("./Guests.csv")) {
-            //     List<string> listA = new List<string>();
-            //     List<string> listB = new List<string>();
-            //     while (!reader.EndOfStream) {
-            //         var line = reader.ReadLine();
-            //         var values = line.Split(";");
+        private List<Guest> GuestsList;
 
-            //         listA.Add(values[0]);
-            //         listB.Add(values[1]);
-            //     }
-            //     Console.WriteLine(listA);
+        public Program () {
+            this.GuestsList = new List<Guest>();
+        }
+
+        public void listGuests (List<Guest> GuestsList) {
+            // string result = Console.ReadLine();
+            // if (Int16.parse(result) > GuestsList.Count || Int16.parse(result) < 0) {
+            //     Console.WriteLine("Error, please choose another guest");
+            // } 
+            Console.WriteLine("Name " + "Passport Number " + "Check-in " + "Check-out " + "Member " + "Points ");
+            foreach(Guest g in GuestsList) {
+                Console.Write(g.getName() + " ");
+                Console.Write(g.getPassportNum() + " ");
+                // Convert dates to DD/MM/YY format
+                Console.Write(g.getHotelStay().getCheckInDate().ToString("dd/MM/yyyy") + " ");
+                Console.Write(g.getHotelStay().getCheckOutDate().ToString("dd/MM/yyyy") + " ");
+                Console.Write(g.getMembership().getStatus() + " ");
+                Console.Write(g.getMembership().getPoints() + " ");
+                Console.WriteLine();
+            }
+        }
+
+        public void registerGuest () {
+            Console.WriteLine("Enter name: ");
+            string name = Console.ReadLine();
+
+            Console.WriteLine("Enter passport number: ");
+            string passportNum = Console.ReadLine();
+            Membership member = new Membership("Ordinary", 0);
+            DateTime startDate = DateTime.Now;
+            DateTime endDate = DateTime.Now;
+            Stay stay = new Stay(startDate, endDate);
+            Guest newGuest = new Guest(name, passportNum, stay, member);
+        }
+        static void Main (string[] args) {
+
             Membership memberAmelia = new Membership("Gold", 280);
             DateTime startDateAmelia = new DateTime(2022, 11, 15, 00, 00, 00);
             DateTime endDateAmelia = new DateTime(2022, 11, 20, 00, 00, 00);
@@ -55,12 +82,19 @@ namespace MainProgram {
             Guest Daniel = new Guest("Daniel", "S1122334B", stayDaniel, memberDaniel);
             Guest Edda = new Guest("Edda", "S3456789A", stayEdda, memberEdda);
             Guest Felix = new Guest("Felix", "A2233445C", stayFelix, memberFelix);
-                Console.WriteLine("Hello");
-            // namespace.classname 
-                Printer.HelloWorld obj = new Printer.HelloWorld();
 
-                obj.printThis();
-            // }
+            // List<Guest> GuestsList = new List<Guest>();\
+            Program programObj = new Program();
+            programObj.GuestsList.Add(Amelia);
+            programObj.GuestsList.Add(Bob);
+            programObj.GuestsList.Add(Cody);
+            programObj.GuestsList.Add(Daniel);
+            programObj.GuestsList.Add(Edda);
+            programObj.GuestsList.Add(Felix);
+
+            // Program programObj = new Program();
+
+            programObj.listGuests(programObj.GuestsList);
         }
     }
 }

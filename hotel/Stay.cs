@@ -17,6 +17,14 @@ class Stay {
 
         }
 
+        public DateTime getCheckInDate () {
+            return this.checkInDate;
+        }
+
+        public DateTime getCheckOutDate () {
+            return this.checkOutDate;
+        }
+        
         public double CalculateTotal () {
             return 1.0;
         }

@@ -13,3 +13,5 @@
 /Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net7.0/hotel.pdb
 /Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net7.0/hotel.genruntimeconfig.cache
 /Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net7.0/ref/hotel.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net7.0/CsvHelper.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net7.0/hotel.csproj.CopyComplete

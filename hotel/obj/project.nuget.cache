@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "BAe9rFLuswIV6B2P8dvD/FO3GcgfFrvKDX1B1CueWr37/9mkiMFRFN1jliGHuH6GIcwek6ZNnPY7femC5i+UXw==",
+  "dgSpecHash": "yf70OpjEb1OHtUiL3orcnEzXTpf9kXIMLZes9bVny6Uy7z5OCS+wk8HDG87yCqJGudWQXGyyEEY1MQ0obcyzIw==",
   "success": true,
   "projectFilePath": "/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/hotel.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/kervyntan/.nuget/packages/csvhelper/30.0.1/csvhelper.30.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

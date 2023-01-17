@@ -5,10 +5,13 @@
 using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Globalization;
+using CsvHelper;
+using CsvHelper.Configuration;
 
 namespace MainProgram {
     class Program {
-        private List<Guest> GuestsList;
+        public List<Guest> GuestsList;
 
         public Program () {
             this.GuestsList = new List<Guest>();
@@ -43,9 +46,42 @@ namespace MainProgram {
             DateTime endDate = DateTime.Now;
             Stay stay = new Stay(startDate, endDate);
             Guest newGuest = new Guest(name, passportNum, stay, member);
+
+            this.GuestsList.Add(newGuest);
+
+            // Guest to be added
+            var records = new List<DataModel>(); 
+            records.Add(new DataModel() {
+                Name = newGuest.getName(),
+                PassportNumber = newGuest.getPassportNum(),
+                MembershipStatus = newGuest.getMembership().getStatus(),
+                MembershipPoints = newGuest.getMembership().getPoints()
+            });
+            var config = new CsvConfiguration(CultureInfo.InvariantCulture)
+            {
+                // Don't write the header again.
+                HasHeaderRecord = false,
+            };
+            // Writing to the csv
+            using (var stream = File.Open("./Guests.csv", FileMode.Append))
+            using (var writer = new StreamWriter(stream))
+            using (var csv = new CsvWriter(writer, config)) {
+                csv.WriteRecords(records);
+            }
+
+            Console.WriteLine("Guest Added!");
         }
         static void Main (string[] args) {
-
+            // Read from the csv
+            // Then print 
+            using (var reader = new StreamReader("./Guests.csv"))
+            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            {
+                var records = csv.GetRecords<DataModel>().ToList();
+                for (int i = 0; i < records.Count; i++) {
+                    Console.WriteLine(records[i].MembershipStatus);
+                }
+            }
             Membership memberAmelia = new Membership("Gold", 280);
             DateTime startDateAmelia = new DateTime(2022, 11, 15, 00, 00, 00);
             DateTime endDateAmelia = new DateTime(2022, 11, 20, 00, 00, 00);
@@ -95,6 +131,14 @@ namespace MainProgram {
             // Program programObj = new Program();
 
             programObj.listGuests(programObj.GuestsList);
+            programObj.registerGuest();
         }
+    }
+
+    class DataModel {
+        public string Name { get; set; }
+        public string PassportNumber {get; set;}
+        public string MembershipStatus {get; set;}
+        public int MembershipPoints {get; set;}
     }
 }

@@ -19,4 +19,12 @@ class Membership {
         return true;
     }
 
+    public string getStatus () {
+        return this.status;
+    }
+
+    public int getPoints () {
+        return this.points;
+    }
+
 }

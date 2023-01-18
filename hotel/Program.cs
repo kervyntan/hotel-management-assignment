@@ -71,6 +71,28 @@ namespace MainProgram {
 
             Console.WriteLine("Guest Added!");
         }
+
+        public void checkInGuest (List<Guest> GuestsList) {
+
+        }
+
+        public void getStayDetails (List<Guest> GuestsList) {
+            for (int i = 0; i < GuestsList.Count; i++) {
+                Console.WriteLine("" + i + ". " + GuestsList[i].getName());
+            }
+
+            Console.WriteLine("Enter a guest's index: ");
+            string chosenStaff = Console.ReadLine();
+            if (chosenStaff != "") {
+                Console.WriteLine("Stay Details: ");
+                Console.WriteLine("Check-in Date: " + GuestsList[Int16.Parse(chosenStaff)].getHotelStay().getCheckInDate().ToString("dd/MM/yyyy"));
+                Console.WriteLine("Check-out Date: " + GuestsList[Int16.Parse(chosenStaff)].getHotelStay().getCheckOutDate().ToString("dd/MM/yyyy"));
+            } else {
+                Console.WriteLine("Please pick a correct index: ");
+                chosenStaff = Console.ReadLine();
+            }
+        }
+
         static void Main (string[] args) {
             // Read from the csv
             // Then print 
@@ -102,6 +124,7 @@ namespace MainProgram {
             }
 
             programObj.listGuests(programObj.GuestsList);
+            programObj.getStayDetails(programObj.GuestsList);
             // programObj.registerGuest();
         }
     }

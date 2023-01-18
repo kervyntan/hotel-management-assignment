@@ -24,6 +24,10 @@ class Stay {
         public DateTime getCheckOutDate () {
             return this.checkOutDate;
         }
+
+        public void setCheckOutDate (DateTime checkOutDate) {
+            this.checkOutDate = checkOutDate;
+        }
         
         public double CalculateTotal () {
             return 1.0;

@@ -8,7 +8,7 @@ class StandardRoom : Room {
 
     }
 
-    public StandardRoom (bool requireWifi, bool requireBreakfast) : base(roomNumber, bedConfiguration, dailyRate, isAvail) {
+    public StandardRoom (bool requireWifi, bool requireBreakfast) {
         this.requireWifi = requireWifi;
         this.requireBreakfast = requireBreakfast;
     }

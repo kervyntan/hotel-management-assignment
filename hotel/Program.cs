@@ -74,64 +74,35 @@ namespace MainProgram {
         static void Main (string[] args) {
             // Read from the csv
             // Then print 
-            using (var reader = new StreamReader("./Guests.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
+            Program programObj = new Program();
+            using (var readerGuest = new StreamReader("./Guests.csv"))
+            using (var readerStays = new StreamReader("./Stays.csv"))
+            using (var csvGuest = new CsvReader(readerGuest, CultureInfo.InvariantCulture))
             {
-                var records = csv.GetRecords<DataModel>().ToList();
-                for (int i = 0; i < records.Count; i++) {
-                    Console.WriteLine(records[i].MembershipStatus);
+                using (var csvStays = new CsvReader(readerStays, CultureInfo.InvariantCulture)) {
+                    var recordsGuest = csvGuest.GetRecords<DataModel>().ToList();
+                    var recordsStays = csvStays.GetRecords<StayDataModel>().ToList();
+                    for (int i = 0; i < recordsGuest.Count; i++) {
+                        // Console.WriteLine(records[i].MembershipStatus);
+                        // Console.WriteLine(recordsGuest[i].MembershipPoints);
+                        // Console.WriteLine(recordsStays[i].CheckinDate);
+                        Membership member = new Membership(recordsGuest[i].MembershipStatus, recordsGuest[i].MembershipPoints);
+                        string passportNum = recordsGuest[i].PassportNumber;
+                        string start = recordsStays[i].CheckinDate;
+                        string end = recordsStays[i].CheckoutDate;
+                        DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        Stay stay = new Stay(startDate, endDate);
+
+                        Guest guest = new Guest(recordsGuest[i].Name, passportNum, stay, member);
+                        programObj.GuestsList.Add(guest);
+
+                    } 
                 }
             }
-            Membership memberAmelia = new Membership("Gold", 280);
-            DateTime startDateAmelia = new DateTime(2022, 11, 15, 00, 00, 00);
-            DateTime endDateAmelia = new DateTime(2022, 11, 20, 00, 00, 00);
-            Stay stayAmelia = new Stay(startDateAmelia, endDateAmelia);
-
-            Membership memberBob = new Membership("Ordinary", 50);
-            DateTime startDateBob = new DateTime(2022, 12, 25, 00, 00, 00);
-            DateTime endDateBob = new DateTime(2022, 12, 31, 00, 00, 00);
-            Stay stayBob = new Stay(startDateBob, endDateBob);
-
-            Membership memberCody = new Membership("Silver", 190);
-            DateTime startDateCody = new DateTime(2023, 12, 26, 00, 00, 00);
-            DateTime endDateCody = new DateTime(2022, 12, 31, 00, 00, 00);
-            Stay stayCody = new Stay(startDateCody, endDateCody);
-
-            Membership memberDaniel = new Membership("Silver", 120);
-            DateTime startDateDaniel = new DateTime(2023, 01, 17, 00, 00, 00);
-            DateTime endDateDaniel = new DateTime(2023, 01, 20, 00, 00, 00);
-            Stay stayDaniel = new Stay(startDateDaniel, endDateDaniel);
-
-            Membership memberEdda = new Membership("Gold", 10);
-            DateTime startDateEdda = new DateTime(2023, 01, 16, 00, 00, 00);
-            DateTime endDateEdda = new DateTime(2023, 01, 22, 00, 00, 00);
-            Stay stayEdda = new Stay(startDateEdda, endDateEdda);
-
-            Membership memberFelix = new Membership("Gold", 220);
-            DateTime startDateFelix = new DateTime(2023, 01, 17, 00, 00, 00);
-            DateTime endDateFelix = new DateTime(2023, 01, 25, 00, 00, 00);
-            Stay stayFelix = new Stay(startDateFelix, endDateFelix);
-
-            Guest Amelia = new Guest("Amelia", "S1234567A", stayAmelia, memberAmelia);
-            Guest Bob = new Guest("Bob", "G1234567A", stayBob, memberBob);
-            Guest Cody = new Guest("Cody", "G2345678A", stayCody, memberCody);
-            Guest Daniel = new Guest("Daniel", "S1122334B", stayDaniel, memberDaniel);
-            Guest Edda = new Guest("Edda", "S3456789A", stayEdda, memberEdda);
-            Guest Felix = new Guest("Felix", "A2233445C", stayFelix, memberFelix);
-
-            // List<Guest> GuestsList = new List<Guest>();\
-            Program programObj = new Program();
-            programObj.GuestsList.Add(Amelia);
-            programObj.GuestsList.Add(Bob);
-            programObj.GuestsList.Add(Cody);
-            programObj.GuestsList.Add(Daniel);
-            programObj.GuestsList.Add(Edda);
-            programObj.GuestsList.Add(Felix);
-
-            // Program programObj = new Program();
 
             programObj.listGuests(programObj.GuestsList);
-            programObj.registerGuest();
+            // programObj.registerGuest();
         }
     }
 
@@ -140,5 +111,17 @@ namespace MainProgram {
         public string PassportNumber {get; set;}
         public string MembershipStatus {get; set;}
         public int MembershipPoints {get; set;}
+    }
+
+    class StayDataModel {
+        public string? Name {get; set;}
+        public string? PassportNumber {get; set;}
+        public bool? IsCheckedOut {get; set;} 
+        public string? CheckinDate {get; set;}
+        public string? CheckoutDate {get; set;}
+        public int? RoomNumber {get; set;} 
+        public bool? Wifi {get; set;}
+        public bool? Breakfast {get; set;} 
+        public bool? ExtraBed {get; set;}
     }
 }

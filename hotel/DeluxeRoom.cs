@@ -6,7 +6,7 @@ class DeluxeRoom : Room {
 
     }
 
-    public DeluxeRoom (bool additionalBed) : base(roomNumber, bedConfiguration, dailyRate, isAvail) {
+    public DeluxeRoom (bool additionalBed) {
         this.additionalBed = additionalBed;
     }
 

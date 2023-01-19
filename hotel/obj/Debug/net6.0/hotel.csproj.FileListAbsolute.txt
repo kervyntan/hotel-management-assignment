@@ -1,0 +1,17 @@
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/hotel
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/hotel.deps.json
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/hotel.runtimeconfig.json
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/hotel.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/hotel.pdb
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/bin/Debug/net6.0/CsvHelper.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.csproj.AssemblyReference.cache
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.GeneratedMSBuildEditorConfig.editorconfig
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.AssemblyInfoInputs.cache
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.AssemblyInfo.cs
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.csproj.CoreCompileInputs.cache
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.csproj.CopyComplete
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/refint/hotel.dll
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.pdb
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/hotel.genruntimeconfig.cache
+/Users/kervyntan/Documents/GitHub/hotel-management-assignment/hotel/obj/Debug/net6.0/ref/hotel.dll

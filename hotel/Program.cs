@@ -40,14 +40,17 @@ namespace MainProgram {
             using (var csvRooms= new CsvReader(reader, CultureInfo.InvariantCulture)) {
                 var record = new RoomsModel();
                 var records = csvRooms.EnumerateRecords(record);
+                int index = 0;
                 Console.WriteLine("RoomType " + "RoomNumber " + "BedConfiguration " + "DailyRate ");
                 foreach (var r in records)
-                {
+                {   
+                    Console.Write(index + ". ");
                     Console.Write(r.RoomType + " ");
                     Console.Write(r.RoomNumber + " ");
                     Console.Write(r.BedConfiguration + " ");
                     Console.Write(r.DailyRate + " ");
                     Console.WriteLine();
+                    index++;
                 }
             }
         }
@@ -90,6 +93,62 @@ namespace MainProgram {
         }
 
         public void checkInGuest (List<Guest> GuestsList) {
+            for (int i = 0; i < GuestsList.Count; i++) {
+                Console.WriteLine("" + i + ". " + GuestsList[i].getName());
+            }
+
+            Console.WriteLine("Select a guest's index: ");
+            string chosenGuest = Console.ReadLine();
+
+            Console.WriteLine("Enter check in date: eg. 31/12/2022");
+            string strStartDate = Console.ReadLine();
+            DateTime startDate = DateTime.ParseExact(strStartDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            Console.WriteLine("Enter check out date: eg. 31/12/2022");
+            string strEndDate = Console.ReadLine();
+            DateTime endDate = DateTime.ParseExact(strEndDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+
+            // Created stay object
+            Stay stay = new Stay(startDate, endDate);
+
+            this.listRooms();
+            Console.WriteLine("");
+            Console.WriteLine("Please pick a room: eg. Standard / Deluxe");
+            string roomType = Console.ReadLine();
+
+            bool wifi = false;
+            bool breakfast = false;
+            bool additionalBed = false;
+            if (roomType == "Standard") {
+                Console.WriteLine("Require Wifi?: ");
+                string isWifi = Console.ReadLine();
+            
+                if (isWifi != "no" || isWifi != "n") {
+                    wifi = true;
+                } 
+
+                Console.WriteLine("Require Breakfast?: ");
+                string isBreakfast = Console.ReadLine();
+
+                if (isBreakfast != "no" || isBreakfast != "n") {
+                    breakfast = true;
+                }
+
+                StandardRoom standardRoom = new StandardRoom(wifi, breakfast);
+
+            } else if (roomType == "Deluxe") {
+                Console.WriteLine("Additional Bed?: ");
+                string isAdditionalBed = Console.ReadLine();
+
+                if (isAdditionalBed != "no" || isAdditionalBed != "n") {
+                    additionalBed = true;
+                }
+
+                DeluxeRoom deluxeRoom = new DeluxeRoom(additionalBed);
+            }
+
+
+
 
         }
 
@@ -99,11 +158,11 @@ namespace MainProgram {
             }
 
             Console.WriteLine("Enter a guest's index: ");
-            string chosenStaff = Console.ReadLine();
-            if (Int16.Parse(chosenStaff) >= 0 && Int16.Parse(chosenStaff) <= GuestsList.Count - 1) {
+            string chosenGuest = Console.ReadLine();
+            if (Int16.Parse(chosenGuest) >= 0 && Int16.Parse(chosenGuest) <= GuestsList.Count - 1) {
                 Console.WriteLine("Stay Details: ");
-                Console.WriteLine("Check-in Date: " + GuestsList[Int16.Parse(chosenStaff)].getHotelStay().getCheckInDate().ToString("dd/MM/yyyy"));
-                Console.WriteLine("Check-out Date: " + GuestsList[Int16.Parse(chosenStaff)].getHotelStay().getCheckOutDate().ToString("dd/MM/yyyy"));
+                Console.WriteLine("Check-in Date: " + GuestsList[Int16.Parse(chosenGuest)].getHotelStay().getCheckInDate().ToString("dd/MM/yyyy"));
+                Console.WriteLine("Check-out Date: " + GuestsList[Int16.Parse(chosenGuest)].getHotelStay().getCheckOutDate().ToString("dd/MM/yyyy"));
             } else {
                 Console.WriteLine("Please pick a correct index: ");
                 chosenStaff = Console.ReadLine();
@@ -183,7 +242,8 @@ namespace MainProgram {
             // programObj.getStayDetails(programObj.GuestsList);
             // programObj.registerGuest();
             // programObj.extendStay(programObj.GuestsList);
-            programObj.listRooms();
+            // programObj.listRooms();
+            programObj.checkInGuest(programObj.GuestsList);
         }
     }
 

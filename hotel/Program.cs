@@ -14,9 +14,92 @@ namespace MainProgram {
         public List<Guest> GuestsList;
 
         public Program () {
+            // Initialise the list of guests
             this.GuestsList = new List<Guest>();
         }
 
+            static void Main (string[] args) {
+            // Read from the csv
+            // Then print 
+
+            //
+            Program programObj = new Program();
+            using (var readerGuest = new StreamReader("./Guests.csv"))
+            using (var readerStays = new StreamReader("./Stays.csv"))
+            using (var csvGuest = new CsvReader(readerGuest, CultureInfo.InvariantCulture))
+            {
+                using (var csvStays = new CsvReader(readerStays, CultureInfo.InvariantCulture)) {
+                    var recordsGuest = csvGuest.GetRecords<DataModel>().ToList();
+                    var recordsStays = csvStays.GetRecords<StayDataModel>().ToList();
+                    for (int i = 0; i < recordsGuest.Count; i++) {
+
+                        Membership member = new Membership(recordsGuest[i].MembershipStatus, recordsGuest[i].MembershipPoints);
+                        string passportNum = recordsGuest[i].PassportNumber;
+                        string start = recordsStays[i].CheckinDate;
+                        string end = recordsStays[i].CheckoutDate;
+                        DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+                        Stay stay = new Stay(startDate, endDate);
+
+                        Guest guest = new Guest(recordsGuest[i].Name, passportNum, stay, member);
+                        programObj.GuestsList.Add(guest);
+
+                    } 
+                }
+            }
+            // Prompt user for choice
+            string val = programObj.menuPrompt();
+            switch(val) {
+                case "0":
+                    break;
+                case "1":
+                    programObj.listGuests(programObj.GuestsList);
+                    break;
+                case "2":
+                    programObj.listRooms();
+                    break;
+                case "3":
+                    programObj.registerGuest();
+                    break;
+                case "4":
+                    programObj.checkInGuest(programObj.GuestsList);
+                    break;
+                case "5":
+                    programObj.getStayDetails(programObj.GuestsList);
+                    break;
+                case "6":
+                    programObj.extendStay(programObj.GuestsList);
+                    break;
+                
+                // If user types in wrong input
+                default:
+                    Console.WriteLine("Please pick a correct option");
+                    // val = programObj.menuPrompt();
+                    break;
+            }
+            // Need to update room availability based on the existing 
+            // rooms taken up by the existing guests,
+            // store them in an object/list
+            // programObj.listGuests(programObj.GuestsList);
+            // programObj.getStayDetails(programObj.GuestsList);
+            // programObj.registerGuest();
+            // programObj.extendStay(programObj.GuestsList);
+            // programObj.listRooms();
+            // programObj.checkInGuest(programObj.GuestsList);
+        }
+        public string menuPrompt () {
+            Console.WriteLine("MENU");
+            Console.WriteLine("=====");
+            Console.WriteLine("1. List all guests");
+            Console.WriteLine("2. List all available rooms");
+            Console.WriteLine("3. Register Guest");
+            Console.WriteLine("4. Check-in Guest");
+            Console.WriteLine("5. Display stay details of a guest");
+            Console.WriteLine("6. Extend stay by number of days");
+            Console.WriteLine("0. Exit");
+            string choice = Console.ReadLine();
+            return choice;
+        }
         public void listGuests (List<Guest> GuestsList) {
             // string result = Console.ReadLine();
             // if (Int16.parse(result) > GuestsList.Count || Int16.parse(result) < 0) {
@@ -40,7 +123,7 @@ namespace MainProgram {
             using (var csvRooms= new CsvReader(reader, CultureInfo.InvariantCulture)) {
                 var record = new RoomsModel();
                 var records = csvRooms.EnumerateRecords(record);
-                int index = 0;
+                int index = 0; 
                 Console.WriteLine("RoomType " + "RoomNumber " + "BedConfiguration " + "DailyRate ");
                 foreach (var r in records)
                 {   
@@ -165,7 +248,7 @@ namespace MainProgram {
                 Console.WriteLine("Check-out Date: " + GuestsList[Int16.Parse(chosenGuest)].getHotelStay().getCheckOutDate().ToString("dd/MM/yyyy"));
             } else {
                 Console.WriteLine("Please pick a correct index: ");
-                chosenStaff = Console.ReadLine();
+                chosenGuest = Console.ReadLine();
             }
         }
 
@@ -206,44 +289,6 @@ namespace MainProgram {
                     chosenStaff = Console.ReadLine();
                 }
             }
-        }
-
-        static void Main (string[] args) {
-            // Read from the csv
-            // Then print 
-            Program programObj = new Program();
-            using (var readerGuest = new StreamReader("./Guests.csv"))
-            using (var readerStays = new StreamReader("./Stays.csv"))
-            using (var csvGuest = new CsvReader(readerGuest, CultureInfo.InvariantCulture))
-            {
-                using (var csvStays = new CsvReader(readerStays, CultureInfo.InvariantCulture)) {
-                    var recordsGuest = csvGuest.GetRecords<DataModel>().ToList();
-                    var recordsStays = csvStays.GetRecords<StayDataModel>().ToList();
-                    for (int i = 0; i < recordsGuest.Count; i++) {
-                        // Console.WriteLine(records[i].MembershipStatus);
-                        // Console.WriteLine(recordsGuest[i].MembershipPoints);
-                        // Console.WriteLine(recordsStays[i].CheckinDate);
-                        Membership member = new Membership(recordsGuest[i].MembershipStatus, recordsGuest[i].MembershipPoints);
-                        string passportNum = recordsGuest[i].PassportNumber;
-                        string start = recordsStays[i].CheckinDate;
-                        string end = recordsStays[i].CheckoutDate;
-                        DateTime startDate = DateTime.ParseExact(start, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                        DateTime endDate = DateTime.ParseExact(end, "dd/MM/yyyy", CultureInfo.InvariantCulture);
-                        Stay stay = new Stay(startDate, endDate);
-
-                        Guest guest = new Guest(recordsGuest[i].Name, passportNum, stay, member);
-                        programObj.GuestsList.Add(guest);
-
-                    } 
-                }
-            }
-
-            // programObj.listGuests(programObj.GuestsList);
-            // programObj.getStayDetails(programObj.GuestsList);
-            // programObj.registerGuest();
-            // programObj.extendStay(programObj.GuestsList);
-            // programObj.listRooms();
-            programObj.checkInGuest(programObj.GuestsList);
         }
     }
 
